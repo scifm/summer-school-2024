@@ -1,6 +1,14 @@
 ### A Pluto.jl notebook ###
 # v0.19.43
 
+#> [frontmatter]
+#> title = "Neural Scaling Laws"
+#> date = "2024-07-11"
+#> 
+#>     [[frontmatter.author]]
+#>     name = "Alexius Wadell"
+#>     url = "https://github.com/awadell1"
+
 using Markdown
 using InteractiveUtils
 
