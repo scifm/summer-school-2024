@@ -394,6 +394,29 @@ Main takeaways:
 2. There's a lot of room for larger models before reaching emperical minimum loss.
 """
 
+# ╔═╡ 8004e7a4-65ad-4b66-a3c8-ef7d1b7927c9
+md"""
+### Impact of Model Shape
+But *how* should the model be scaled up? More layers? Wider Layers?
+
+![model shape](img/model_shape.png)
+> [Kaplan et. al.](https://doi.org/10.48550/arXiv.2001.08361) found that model performance was largely invarient to model shape for a wide range of shape ratios.
+
+The upside here is once you find a good ratio for you model, scalling up is realtively straight-forward: Just hold the ratio constant. Thanksfully, the model isn't too sensitive to the attention-head size or aspect ratio, which can be harder to hold constant.
+
+| Ratio | Name | Typical |
+|:-----:|:-------|:----:|
+| ``d_{ff}/d_{model}`` | Feed-Forward Ratio | 4 |
+| ``d_{model}/d_{layer}`` | Aspect Ratio | 64 - 128 |
+| ``d_{model}/d_{head}`` | Attention Head Size | 64, 128 |
+
+| Parameter | Name |
+|:---:|:---|
+| ``d_{model}`` | The Embedding Size of the Model, some times called "hidden size" |
+| ``d_{ff}`` | The width of the feed-forward (MLP) layer in the transformer, sometime "intermediate size" |
+| ``d_{layer}`` | The number of transformer layers in the model |
+"""
+
 # ╔═╡ 040fc638-9f16-4970-b73e-7f1ced1677d4
 md"""
 # Exercises for the Reader
@@ -2712,6 +2735,7 @@ version = "3.5.0+0"
 # ╠═32952bfd-3751-404f-8e75-c34541402ed0
 # ╟─ead24db3-9b33-4d51-9020-2a0fef111c71
 # ╟─f177b23d-22be-43da-a89a-9c484d2a9282
+# ╟─8004e7a4-65ad-4b66-a3c8-ef7d1b7927c9
 # ╟─040fc638-9f16-4970-b73e-7f1ced1677d4
 # ╟─2a83f2b0-4562-4720-9ba5-ca7e9432f637
 # ╟─ddca404b-5c29-40f6-92a5-b826d2bd451c
