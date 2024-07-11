@@ -14,6 +14,10 @@ Scan the following QR code, or visit https://github.com/scifm/summer-school-2024
 - Training Tokenizers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/intro-to-tokenizers/blob/main/Training_Tokenizers.ipynb)
 - Byte Pair Encoding tokenization [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/intro-to-tokenizers/blob/main/Byte_Pair_Encoding_tokenization.ipynb)
 
+### Tutorial 3
+
+- GenSLM [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/intro-to-tokenizers/blob/main/GenSLM_Downstream.ipynb)
+
 ## What's here
 
 - `data/` Various (small) datasets for the tutorials
