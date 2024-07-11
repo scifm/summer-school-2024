@@ -404,7 +404,7 @@ Main takeaways:
 
 # ╔═╡ 8004e7a4-65ad-4b66-a3c8-ef7d1b7927c9
 md"""
-### Impact of Model Shape
+## Impact of Model Shape
 But *how* should the model be scaled up? More layers? Wider Layers?
 
 ![model shape](img/model_shape.png)
