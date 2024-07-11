@@ -39,7 +39,7 @@ We're going to use scaling data from [Scaling Data-Constrained Language Models](
 
 # ╔═╡ ec6dea07-da15-448a-9f09-3ad45af35d57
 begin
-	ds_file = Downloads.download("https://raw.githubusercontent.com/scifm/intro-scaling/main/scaling_law.csv")
+	ds_file = Downloads.download("https://raw.githubusercontent.com/scifm/summer-school-2024/main/data/scaling_law.csv")
 	df = DataFrame(CSV.File(ds_file))
 end
 
