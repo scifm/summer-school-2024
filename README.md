@@ -1,11 +1,13 @@
-# SciFM Summer School 2024: Introduction to Tokenizing Scientific Data
+# SciFM Summer School 2024
 
-Scan the following QR code, or visit https://github.com/scifm/intro-to-tokenizers
+Scan the following QR code, or visit https://github.com/scifm/summer-school-2024
 <p align="center">
-    <img src="repo_qr.svg" alt="QR Code for Tutorial" width="200"/>
+    <img src="img/repo_qr.svg" alt="QR Code for Tutorial" width="200"/>
 </p>
 
-## Notebooks
+## Tutorials
+
+### Tokenisers
 
 - Omics [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/intro-to-tokenizers/blob/main/omics.ipynb)
 - Chemical Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/intro-to-tokenizers/blob/main/ChemicalData.ipynb)
@@ -15,4 +17,5 @@ Scan the following QR code, or visit https://github.com/scifm/intro-to-tokenizer
 ## What's here
 
 - `data/` Various (small) datasets for the tutorials
+- `img/` Various images used by the notebooks, etc.
 
