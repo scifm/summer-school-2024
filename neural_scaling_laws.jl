@@ -25,6 +25,27 @@ using PlutoUI
 # ╔═╡ cad1f933-0be9-401f-828c-56365f332ec3
 md"""
 # Fitting Scaling Laws for SciFMs
+The transformer archetecture has enabled truly massive models thanks the implicit parallelism of attention ([Vaswani et. al.](http://arxiv.org/abs/1706.03762)). But with increasing size, comes larger hyperparameter sweeps and rapidly rising costs.
+[Kaplan et. al.](http://arxiv.org/abs/2001.08361) observed that as both the model's size and amount of data were scaled up propotionally, the model kept getting better over siz orders of magnitude:
+
+![Kaplan Scaling Laws](img/kaplan_scaling.png)
+> Observed Scaling Behavior in Model Performance from [Kaplan et. al.](http://arxiv.org/abs/2001.08361)
+
+This hypothesis was then applied to train first [GPT-3 (175B)](https://papers.nips.cc/paper/2020/hash/1457c0d6bfcb4967418bfb8ac142f64a-Abstract.html) and then [Chinchilla (70B)](https://doi.org/10.48550/arXiv.2203.15556); with the latter introducing the notion of "compute-optimal" training:
+
+![Compute Optimal Scaling](img/compute_optimal_scaling.png)
+> Iso-Loss Contours fitted for Chinchilla by [Hoffmann et. al.](https://doi.org/10.48550/arXiv.2203.15556).
+
+Critically the contour lines have an optimal model size for a given compute budget. That is, for a given budget, there is a model& data size that gives the lowest loss.
+
+![Scaling Up Chinchilla](img/chinchilla_model.png)
+> Scaling laws used by [Hoffmann et. al.](https://doi.org/10.48550/arXiv.2203.15556) to train Chinchilla.
+
+## Goals for Today
+1. Fit Scaling Laws to model sweep data from [Muennighoff et. al.'s](https://arxiv.org/abs/2305.16264)
+2. Determine how we should scale up the model to remain "compute-optimal"
+3. Estimate the intrinsic entropy of their data, estabilishing a lower limit on model loss.
+
 """
 
 # ╔═╡ 51a5ccfd-c537-4e42-9d0b-c21fb4da7e25
@@ -72,8 +93,8 @@ plot_raw_data(df.model_size, df.total_tokens, df.loss) |> first
 
 # ╔═╡ ecde9ae9-7daf-4ccc-bb4c-9848fff9a4db
 md"""
-# Fitting Hoffman et. al.'s Scaling Model
-We're going to fit the scaling law proposed by [Hoffman et al.](https://arxiv.org/abs/2203.15556), which extends [Kaplan et al.](https://arxiv.org/abs/2001.08361) by adding the ``E`` term:
+# Fitting Hoffmann et. al.'s Scaling Model
+We're going to fit the scaling law proposed by [Hoffmann et al.](https://arxiv.org/abs/2203.15556), which extends [Kaplan et al.](https://arxiv.org/abs/2001.08361) by adding the ``E`` term:
 
 ``
 L(N, D) = \frac{A}{N^{\alpha}} + \frac{B}{D^{\beta}} + E
@@ -111,13 +132,13 @@ Computes the [log-sum-exp](https://en.wikipedia.org/wiki/LogSumExp) of it's inpu
 lse(x...) = log(sum(exp, [x...]))
 
 """
-	l = hoffman_scaling(x, p)
+	l = hoffmann_scaling(x, p)
 
 Computes the Huber loss for the parameters `x = (α, β, ...)` and data
 `p = (; model_size, data_size loss)` following the procedure outlined
 by [Hoffman et al.](https://arxiv.org/abs/2203.15556)
 """
-function hoffman_scaling(x, p)
+function hoffmann_scaling(x, p)
 	# Unpack the data
 	(; model_size, data_size, loss) = p
 	α, β, a, b, e = x
@@ -160,7 +181,7 @@ p = (; model_size=df.model_size, data_size=df.unique_tokens, loss=df.loss);
 # ╔═╡ 309bd25c-d20a-4a08-bd84-620d9a91f0b8
 # Not sure what a function does? Click on it, then on "Live Docs" in the lower right
 x0 = argmin(grid) do x
-	hoffman_scaling(x, p)
+	hoffmann_scaling(x, p)
 end |> x -> [x...] # This splats out x (a tuple) into a vector
 
 # ╔═╡ 324b7bf4-31cf-4376-bccb-5e17a8f72b78
@@ -173,17 +194,17 @@ Afterwards, we're left with our fitted parameters:
 
 # ╔═╡ e16651d2-be77-4399-ad84-8bc722183be4
 begin
-	prob_hoffman = OptimizationProblem(
-		OptimizationFunction(hoffman_scaling, AutoForwardDiff()),
+	prob_hoffmann = OptimizationProblem(
+		OptimizationFunction(hoffmann_scaling, AutoForwardDiff()),
 		x0, p,
 	)
-	sol_hoffman = solve(prob_hoffman, Optim.LBFGS())
-	p_hoffman = (;
-		α=sol_hoffman.u[1],
-		β=sol_hoffman.u[2],
-		A=exp(sol_hoffman.u[3]),
-		B=exp(sol_hoffman.u[4]),
-		E=exp(sol_hoffman.u[5]),
+	sol_hoffmann = solve(prob_hoffmann, Optim.LBFGS())
+	p_hoffmann = (;
+		α=sol_hoffmann.u[1],
+		β=sol_hoffmann.u[2],
+		A=exp(sol_hoffmann.u[3]),
+		B=exp(sol_hoffmann.u[4]),
+		E=exp(sol_hoffmann.u[5]),
 	)
 end
 
@@ -192,7 +213,7 @@ md"""
 # Training Compute Optimal Models
 Now that we have fits for A, ``\alpha``, B, ``\beta`` and E, we can estimate the optimal model size for a given compute budget.
 
-We're going to skip the derivation (See [Hoffman et al.](https://arxiv.org/abs/2203.15556)); but the puch line are scaling laws for model and data size with the compute budget:
+We're going to skip the derivation (See [Hoffmann et al.](https://arxiv.org/abs/2203.15556)); but the puch line are scaling laws for model and data size with the compute budget:
 
 `` N_{opt}(C) = G \left( \frac{C}{6} \right)^a ``
 
@@ -206,13 +227,13 @@ Where:
 
 ``b = \frac{\alpha}{\alpha + \beta} ``
 
-Interestingly, [Hoffman et al.](https://arxiv.org/abs/2203.15556) found that ``a \approx b``, impling that the number of parameters and number of tokens should be scaled evenly. That is, when doubling the number of parameters the number of tokens should also be doubled. Conversely, [Kaplan et al.](https://arxiv.org/abs/2001.08361) found that model size sould scale faster with ``N^{0.74}/D``.
+Interestingly, [Hoffmann et al.](https://arxiv.org/abs/2203.15556) found that ``a \approx b``, impling that the number of parameters and number of tokens should be scaled evenly. That is, when doubling the number of parameters the number of tokens should also be doubled. Conversely, [Kaplan et al.](https://arxiv.org/abs/2001.08361) found that model size sould scale faster with ``N^{0.74}/D``.
 
 | Source | ``a`` | ``b`` |
 |--------|-------|-------|
-| [Hoffman et al.](https://arxiv.org/abs/2203.15556) | 0.50 | 0.50 |
+| [Hoffmann et al.](https://arxiv.org/abs/2203.15556) | 0.50 | 0.50 |
 | [Kaplan et al.](https://arxiv.org/abs/2001.08361) | 0.73 | 0.27 |
-| Us 🎉 | $(round(p_hoffman.β / (p_hoffman.α + p_hoffman.β); digits=2)) | $(round(p_hoffman.α / (p_hoffman.α + p_hoffman.β); digits=2)) |
+| Us 🎉 | $(round(p_hoffmann.β / (p_hoffmann.α + p_hoffmann.β); digits=2)) | $(round(p_hoffmann.α / (p_hoffmann.α + p_hoffmann.β); digits=2)) |
 """
 
 # ╔═╡ b02dd2d6-4206-43ce-867e-db8b8e6ae616
@@ -227,6 +248,17 @@ function compute_optimal_model(C; p)
 	a = β / (α + β) # Yes, a was log(A) during fitting 🙃
 	return G * (C/6)^a
 end;
+
+# ╔═╡ 86466dc1-356d-4c85-94e4-4b68aa29fceb
+md"""
+## Estimating Compute Costs
+How much compute does it take to train a model with ``N`` parameters on ``D`` tokens?
+If we define "compute" as the number of flops to train the model, and not the "wall-time" or "node-hours" needed, we can tabulate the costs directly:
+
+Roughly, during the forward pass each parameter is involved in 2 floating-point operations: one multiply and one accumulate. Giving a total cost of ``\approx 2N`` for the forward pass. The backward pass costs ~2x the forward pass (update parameters and optimizer states), giving a total cost of ``C \approx 6ND``.
+
+For more details and a per component tabuluation see [Kaplan et. al.](https://doi.org/10.48550/arXiv.2001.08361)
+"""
 
 # ╔═╡ db8e6c93-7a29-4f0b-9247-08e02d1f3e4d
 md"""
@@ -266,7 +298,7 @@ function plot_compute_optimal(model_size, data_size, loss; p)
 	Colorbar(f[1,2], h; label="Loss")
 
 	# Plot Compute Optimal Curve
-	N_opt = map(c -> compute_optimal_model(c; p=p_hoffman), C_opt)
+	N_opt = map(c -> compute_optimal_model(c; p), C_opt)
 	lines!(ax, C_opt, N_opt;
 		label="Compute Optimal Frontier",
 		color=:red,
@@ -296,7 +328,7 @@ end
 end
 
 # ╔═╡ 9c8aa5d4-3689-4416-8de3-4884dcd2dd0a
-plot_compute_optimal(p.model_size, p.data_size, p.loss; p=p_hoffman)
+plot_compute_optimal(p.model_size, p.data_size, p.loss; p=p_hoffmann)
 
 # ╔═╡ 038283a6-8f58-4029-9d0b-01614741e479
 md"""
@@ -309,7 +341,7 @@ H = \sum_{x \in \chi} p(x)\log p(x)
 
 For example, english has a Shannon Entropy (H) of ~2.6 bits/character, with the caveat that the proability of each character is independent the other character.
 
-In [Hoffman et. al](https://arxiv.org/abs/2203.15556) this is modeled by ``E`` which represents the minimum possible loss in the limit of infinite data, model parameters and compute.
+In [Hoffmann et. al](https://arxiv.org/abs/2203.15556) this is modeled by ``E`` which represents the minimum possible loss in the limit of infinite data, model parameters and compute. [Kaplan et. al](https://doi.org/10.48550/arXiv.2001.08361) also noted that the lost "must flatten out evenutally before reaching zero," but did not observe it.
 
 ``
 \lim\limits_{N,D \to \infty} L(N, D) \to E
@@ -351,7 +383,7 @@ end
 plot_compute_optimal_loss(
 	@.(6 * p.data_size * p.model_size),
 	p.loss,
-	p_hoffman,
+	p_hoffmann,
 )
 end
 
@@ -2672,6 +2704,7 @@ version = "3.5.0+0"
 # ╠═e16651d2-be77-4399-ad84-8bc722183be4
 # ╟─bcd3d39f-67d4-4622-82a6-912c7cab6161
 # ╠═b02dd2d6-4206-43ce-867e-db8b8e6ae616
+# ╟─86466dc1-356d-4c85-94e4-4b68aa29fceb
 # ╟─db8e6c93-7a29-4f0b-9247-08e02d1f3e4d
 # ╟─3a005b41-4f43-43ad-a481-deb97f2ebdff
 # ╟─9c8aa5d4-3689-4416-8de3-4884dcd2dd0a
