@@ -9,25 +9,30 @@ Scan the following QR code, or visit https://github.com/scifm/summer-school-2024
 
 ### Tutorial 2: Tokenization
 
-- Omics [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/omics.ipynb)
-- Chemical Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/ChemicalData.ipynb)
-- Training Tokenizers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/Training_Tokenizers.ipynb)
-- Byte Pair Encoding tokenization [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/Byte_Pair_Encoding_tokenization.ipynb)
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/omics.ipynb) Omics
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/ChemicalData.ipynb) Chemical Data
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/Training_Tokenizers.ipynb) Training Tokenizers
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/Byte_Pair_Encoding_tokenization.ipynb) Byte Pair Encoding tokenization
 
 ### Tutorial 3: Model Architectures
 
-- GenSLM [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/GenSLM_Downstream.ipynb)
-- Vision Transformer [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/ViT_SciFM.ipynb)
-- Diffusion Models [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tonyzyl/DiffusionReconstruct/blob/master/demo.ipynb)
-- Poseidon: Efficient Models for PDEs [![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/camlab-ethz/poseidon)
-- NeuralOperators [![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/neuraloperator/neuraloperator/tree/main)
-- Neural Scaling Laws [![Pluto.jl Notebook](https://img.shields.io/badge/Pluto.jl-Neural_Scaling_Laws-blue?logo=Julia)](https://scifm.ai/summer-school-2024/neural_scaling_laws.html)
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/GenSLM_Downstream.ipynb) GenSLM
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/ViT_SciFM.ipynb) Vision Transformer
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tonyzyl/DiffusionReconstruct/blob/master/demo.ipynb) Diffusion Models
+- [![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/camlab-ethz/poseidon) Poseidon: Efficient Models for PDEs
+- [![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/neuraloperator/neuraloperator/tree/main) NeuralOperators
+- [![Pluto.jl Notebook](https://img.shields.io/badge/Pluto.jl-Neural_Scaling_Laws-blue?logo=Julia)](https://scifm.ai/summer-school-2024/neural_scaling_laws.html) Neural Scaling Laws
 
 ## Tutorial 4
-- Retrieval Augmented Generation [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/SciFMRAGTutorial.ipynb)
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/SciFMRAGTutorial.ipynb) Retrieval Augmented Generation
 
-## What's here
+## Tutorial 5: Programming Novel AI Accelerators for Scientific Computing
+[![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/argonne-lcf/summer-school-2024)
 
-- `data/` Various (small) datasets for the tutorials
-- `img/` Various images used by the notebooks, etc.
+Slides, tutorials, and code for the session are available on ALCF's repo linked above. Tutorials for the accelerators in the [ALCF AI Testbed](https://www.alcf.anl.gov/alcf-ai-testbed) are below:
 
+- [Cerebras](https://github.com/argonne-lcf/summer-school-2024/blob/main/Cerebras/README.md)  
+- [SambaNova](https://github.com/argonne-lcf/summer-school-2024/blob/main/SambaNova/README.md)                                    
+- [Graphcore](https://github.com/argonne-lcf/summer-school-2024/blob/main/Graphcore/README.md)  
+- [Groq](https://github.com/argonne-lcf/summer-school-2024/blob/main/Groq/README.md)
+- [NVIDIA]([./](https://github.com/argonne-lcf/summer-school-2024/blob/main/)Nvidia/README.md)
