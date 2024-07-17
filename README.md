@@ -31,6 +31,7 @@ Scan the following QR code, or visit https://github.com/scifm/summer-school-2024
 
 Slides, tutorials, and code for the session are available on ALCF's repo linked above. Tutorials for the accelerators in the [ALCF AI Testbed](https://www.alcf.anl.gov/alcf-ai-testbed) are below:
 
+- [LLMs on Polaris](https://samforeman.me/talks/llms-on-polaris)
 - [Cerebras](https://github.com/argonne-lcf/summer-school-2024/blob/main/Cerebras/README.md)  
 - [SambaNova](https://github.com/argonne-lcf/summer-school-2024/blob/main/SambaNova/README.md)                                    
 - [Graphcore](https://github.com/argonne-lcf/summer-school-2024/blob/main/Graphcore/README.md)  
