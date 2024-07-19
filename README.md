@@ -37,3 +37,6 @@ Slides, tutorials, and code for the session are available on ALCF's repo linked 
 - [Graphcore](https://github.com/argonne-lcf/summer-school-2024/blob/main/Graphcore/README.md)  
 - [Groq](https://github.com/argonne-lcf/summer-school-2024/blob/main/Groq/README.md)
 - [NVIDIA]([./](https://github.com/argonne-lcf/summer-school-2024/blob/main/)Nvidia/README.md)
+
+## Tutorial 6: Advanced Privacy-Preserving Federated Learning Framework
+[![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/APPFL/appfl-scifm)
