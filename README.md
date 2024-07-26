@@ -1,12 +1,5 @@
 # SciFM Summer School 2024
 
-Scan the following QR code, or visit https://github.com/scifm/summer-school-2024
-<p align="center">
-    <img src="img/repo_qr.svg" alt="QR Code for Tutorial" width="200"/>
-</p>
-
-## Tutorials
-
 ### Tutorial 2: Tokenization
 
 - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/omics.ipynb) Omics
@@ -25,6 +18,7 @@ Scan the following QR code, or visit https://github.com/scifm/summer-school-2024
 
 ## Tutorial 4
 - [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/SciFMRAGTutorial.ipynb) Retrieval Augmented Generation
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/scifm/summer-school-2024/blob/main/protein_gene_dpo.ipynb) Fine-Tuning and Preferences
 
 ## Tutorial 5: Programming Novel AI Accelerators for Scientific Computing
 [![Static Badge](https://img.shields.io/badge/GitHub-Source_Code-blue?logo=GitHub)](https://github.com/argonne-lcf/summer-school-2024)
